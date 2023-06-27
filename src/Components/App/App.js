@@ -1,4 +1,5 @@
 import './App.css';
+import SearchResults from '../SearchResults/SearchResults';
 
 function App() {
   return (
@@ -7,7 +8,7 @@ function App() {
       <div className="App">
         {/* Add a SearchBar component */}
         <div className="App-playlist">
-          {/* Add a SearchResults component */}
+          <SearchResults />
           {/* Add a Playlist component */}
         </div>
       </div>
