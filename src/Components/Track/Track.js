@@ -1,3 +1,5 @@
+import './Track.css';
+
 function Track() {
   return (
     <div className="Track">
