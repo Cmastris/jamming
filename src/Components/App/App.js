@@ -5,14 +5,14 @@ import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 
 function App() {
+
   const [searchResults, setSearchResults] = useState([
-    { name: "SR Name 1", artist: "Artist 1", album: "Album 1", id: 1 },
-    { name: "SR Name 2", artist: "Artist 2", album: "Album 2", id: 2 },
-    { name: "SR Name 3", artist: "Artist 3", album: "Album 3", id: 3 }
+    { name: "Track 1", artist: "Artist 1", album: "Album 1", id: 1 },
+    { name: "Track 2", artist: "Artist 2", album: "Album 2", id: 2 },
+    { name: "Track 3", artist: "Artist 3", album: "Album 3", id: 3 }
   ]);
 
   const [playlistName, setPlaylistName] = useState("My Playlist");
-
   const [playlistTracks, setPlaylistTracks] = useState([]);
 
   function addTrack(track) {
