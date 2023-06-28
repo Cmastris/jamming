@@ -1,7 +1,7 @@
 import './Playlist.css';
 import TrackList from '../TrackList/TrackList';
 
-function Playlist({ playlistTracks }) {
+function Playlist({ playlistName, playlistTracks }) {
   return (
     <div className="Playlist">
       <input defaultValue={'New Playlist'} />
