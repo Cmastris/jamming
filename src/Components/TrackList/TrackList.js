@@ -1,10 +1,10 @@
 import './TrackList.css';
+import Track from '../Track/Track';
 
 function TrackList({ tracks }) {
-  console.log(tracks);
   return (
     <div className="TrackList">
-      {/* Add a map method that renders a set of Track components */}
+      {tracks.map(t => <Track key={t.id} name={t.name} artist={t.artist} album={t.album} />)}
     </div>
   );
 }
