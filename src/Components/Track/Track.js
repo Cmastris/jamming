@@ -1,6 +1,6 @@
 import './Track.css';
 
-function Track({ isRemoval }) {
+function Track({ name, artist, album, isRemoval }) {
 
   function renderAction() {
     return isRemoval ? "-" : "+";
@@ -9,8 +9,8 @@ function Track({ isRemoval }) {
   return (
     <div className="Track">
       <div className="Track-information">
-        <h3>Track Name</h3>
-        <p>Track Artist | Track Album</p>
+        <h3>{name}</h3>
+        <p>{artist} | {album}</p>
       </div>
       <button className="Track-action">{renderAction()}</button>
     </div>
