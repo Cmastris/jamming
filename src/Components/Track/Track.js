@@ -1,9 +1,13 @@
 import './Track.css';
 
-function Track({ name, artist, album, isRemoval }) {
+function Track({ track, name, artist, album, isRemoval, onAdd }) {
 
   function renderAction() {
     return isRemoval ? "-" : "+";
+  }
+
+  function addTrack() {
+    onAdd(track);
   }
 
   return (
@@ -12,7 +16,7 @@ function Track({ name, artist, album, isRemoval }) {
         <h3>{name}</h3>
         <p>{artist} | {album}</p>
       </div>
-      <button className="Track-action">{renderAction()}</button>
+      <button className="Track-action" onClick={addTrack}>{renderAction()}</button>
     </div>
   );
 }
