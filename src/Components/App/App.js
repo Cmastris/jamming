@@ -7,12 +7,12 @@ import Playlist from '../Playlist/Playlist';
 function App() {
 
   const [searchResults, setSearchResults] = useState([
-    { name: "Track 1", artist: "Artist 1", album: "Album 1", id: 1 },
-    { name: "Track 2", artist: "Artist 2", album: "Album 2", id: 2 },
-    { name: "Track 3", artist: "Artist 3", album: "Album 3", id: 3 }
+    { name: "Track 1", artist: "Artist 1", album: "Album 1", id: 1, uri: 101 },
+    { name: "Track 2", artist: "Artist 2", album: "Album 2", id: 2, uri: 102 },
+    { name: "Track 3", artist: "Artist 3", album: "Album 3", id: 3, uri: 103 }
   ]);
 
-  const [playlistName, setPlaylistName] = useState("My Playlist");
+  const [playlistName, setPlaylistName] = useState("New Playlist");
   const [playlistTracks, setPlaylistTracks] = useState([]);
 
   function addTrack(track) {
@@ -33,6 +33,16 @@ function App() {
     setPlaylistName(name);
   }
 
+  function savePlaylist() {
+    const trackURIs = playlistTracks.map(track => track.uri);
+    // TODO: save as playlist to Spotify using `playlistName` and `trackURIs`
+    console.log(trackURIs);
+    console.log(playlistName);
+    setPlaylistName("New Playlist");
+    setPlaylistTracks([]);
+
+  }
+
   return (
     <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
@@ -43,6 +53,7 @@ function App() {
           <Playlist playlistTracks={playlistTracks}
                     onRemove={removeTrack}
                     onNameChange={updatePlaylistName}
+                    onSave={savePlaylist}
                     />
         </div>
       </div>
