@@ -15,6 +15,11 @@ function App() {
   const [playlistName, setPlaylistName] = useState("New Playlist");
   const [playlistTracks, setPlaylistTracks] = useState([]);
 
+  function search(query) {
+    console.log(query);
+    // TODO: query Spotify API and update `searchResults`
+  }
+
   function addTrack(track) {
     const included = playlistTracks.find(playlistTrack => playlistTrack.id === track.id);
     if (!included) {
@@ -47,7 +52,7 @@ function App() {
     <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
       <div className="App">
-        <SearchBar />
+        <SearchBar onSearch={search} />
         <div className="App-playlist">
           <SearchResults searchResults={searchResults} onAdd={addTrack} />
           <Playlist playlistTracks={playlistTracks}
