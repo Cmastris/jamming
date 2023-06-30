@@ -6,11 +6,7 @@ import Playlist from '../Playlist/Playlist';
 
 function App() {
 
-  const [searchResults, setSearchResults] = useState([
-    { name: "Track 1", artist: "Artist 1", album: "Album 1", id: 1, uri: 101 },
-    { name: "Track 2", artist: "Artist 2", album: "Album 2", id: 2, uri: 102 },
-    { name: "Track 3", artist: "Artist 3", album: "Album 3", id: 3, uri: 103 }
-  ]);
+  const [searchResults, setSearchResults] = useState([]);
 
   const [playlistName, setPlaylistName] = useState("New Playlist");
   const [playlistTracks, setPlaylistTracks] = useState([]);
@@ -18,6 +14,11 @@ function App() {
   function search(query) {
     console.log(query);
     // TODO: query Spotify API and update `searchResults`
+    setSearchResults([
+    { name: "Track 1", artist: "Artist 1", album: "Album 1", id: 1, uri: 101 },
+    { name: "Track 2", artist: "Artist 2", album: "Album 2", id: 2, uri: 102 },
+    { name: "Track 3", artist: "Artist 3", album: "Album 3", id: 3, uri: 103 }
+  ]);
   }
 
   function addTrack(track) {
