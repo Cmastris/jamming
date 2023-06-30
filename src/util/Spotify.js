@@ -46,6 +46,39 @@ const Spotify = {
   clearAccessToken() {
     token = null;
     console.log('Token cleared.');
+  },
+
+  async search(term) {
+    // https://developer.spotify.com/documentation/web-api/concepts/api-calls
+    // https://developer.spotify.com/documentation/web-api/reference/search
+    
+    let auth = this.getAccessToken();
+    if (!auth) {
+      console.log("Not authenticated; won't search.");
+      return [];
+    }
+
+    console.log(`Authenticated; requesting search data for "${term}"...`);
+    try {
+      const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`,
+        { headers: {Authorization: `Bearer ${token}`} }
+      );
+    
+      const jsonData = await response.json();
+      const jsonTracks = jsonData.tracks.items;
+      return jsonTracks.map(track => {
+        return {
+          id: track.id,
+          name: track.name,
+          artist: track.artists[0].name,
+          album: track.album.name,
+          uri: track.uri
+        };
+      });
+    } catch(e) {
+      console.log(e);
+      return [];
+    }
   }
 };
 
