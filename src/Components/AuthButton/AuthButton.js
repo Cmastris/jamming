@@ -1,3 +1,5 @@
+import './AuthButton.css';
+
 function AuthButton({ onClick }) {
   return (
     <div className="AuthButton">

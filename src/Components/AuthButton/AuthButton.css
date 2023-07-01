@@ -1,0 +1,30 @@
+.AuthButton {
+  text-align: center;
+}
+
+div.AuthButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 6rem;
+  margin-bottom: 3rem;
+}
+
+.AuthButton p {
+  margin-bottom: 2.5rem;
+}
+
+button.AuthButton {
+  cursor: pointer;
+  padding: 1.2rem 2rem;
+  border-radius: 54px;
+  background-color: #1db954;
+  font-size: 1rem;
+  transition: color .3s;
+  border: 0px;
+  color: #000;
+}
+
+button.AuthButton:hover {
+  color: #fff;
+}
