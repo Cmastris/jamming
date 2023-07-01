@@ -84,6 +84,69 @@ const Spotify = {
       console.log(e);
       return [];
     }
+  },
+
+  async savePlaylist(name, URIs) {
+
+    if (name.length < 1) {
+      console.log("Playlist name not provided; won't save playlist.");
+      return;
+    }
+
+    let auth = this.getAccessToken();
+    if (!auth) {
+      console.log("Not authenticated; won't save playlist.");
+      return;
+    }
+
+    console.log(`Authenticated; saving "${name}" playlist...`);
+    try {
+      // Get user ID
+      let headers = {Authorization: `Bearer ${token}`};
+      const userIdResponse = await fetch(`https://api.spotify.com/v1/me`,
+        { headers: headers }
+      );
+      const jsonUserIdResponse = await userIdResponse.json();
+      const userId = jsonUserIdResponse.id;
+
+      // Create empty playlist
+      const playlistCreateResponse = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`,
+        {
+          headers: headers,
+          method: "POST",
+          body: JSON.stringify({
+            name: name,
+            description: "Created via the Jamming app."
+          })
+        }
+      );
+      const jsonPlaylistCreateResponse = await playlistCreateResponse.json();
+      const playlistId = jsonPlaylistCreateResponse.id;
+
+      // Return if no tracks provided
+      if (!URIs || URIs.length < 1) {
+        console.log(`Empty playlist "${name}" (${playlistId}) created.`);
+        return playlistId;
+      }
+
+      // Add tracks to playlist
+      await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+        {
+          headers: headers,
+          method: "POST",
+          body: JSON.stringify({
+            uris: URIs
+          })
+        }
+      );
+
+      console.log(`Playlist "${name}" (${playlistId}) created.`);
+      return playlistId;
+      
+    } catch(e) {
+      console.log(e);
+      return;
+    }
   }
 };
 

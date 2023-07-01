@@ -35,14 +35,14 @@ function App() {
     setPlaylistName(name);
   }
 
-  function savePlaylist() {
+  async function savePlaylist() {
     const trackURIs = playlistTracks.map(track => track.uri);
-    // TODO: save as playlist to Spotify using `playlistName` and `trackURIs`
-    console.log(trackURIs);
-    console.log(playlistName);
-    setPlaylistName("New Playlist");
-    setPlaylistTracks([]);
-
+    const playlistId = await Spotify.savePlaylist(playlistName, trackURIs);
+    if (playlistId) {
+      console.log("Resetting playlist to default (empty) state.");
+      setPlaylistName("New Playlist");
+      setPlaylistTracks([]);
+    }
   }
 
   return (
