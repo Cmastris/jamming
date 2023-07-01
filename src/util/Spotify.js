@@ -2,6 +2,7 @@ import cid from './secrets';
 
 const clientId = cid;
 const redirectURI = "http://localhost:3000/";
+const APIBaseURI = "https://api.spotify.com/v1";
 let token = null;
 
 const Spotify = {
@@ -65,7 +66,7 @@ const Spotify = {
 
     console.log(`Authenticated; requesting search data for "${term}"...`);
     try {
-      const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`,
+      const response = await fetch(`${APIBaseURI}/search?type=track&q=${term}`,
         { headers: {Authorization: `Bearer ${token}`} }
       );
     
@@ -103,14 +104,14 @@ const Spotify = {
     try {
       // Get user ID
       let headers = {Authorization: `Bearer ${token}`};
-      const userIdResponse = await fetch(`https://api.spotify.com/v1/me`,
+      const userIdResponse = await fetch(`${APIBaseURI}/me`,
         { headers: headers }
       );
       const jsonUserIdResponse = await userIdResponse.json();
       const userId = jsonUserIdResponse.id;
 
       // Create empty playlist
-      const playlistCreateResponse = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`,
+      const playlistCreateResponse = await fetch(`${APIBaseURI}/users/${userId}/playlists`,
         {
           headers: headers,
           method: "POST",
@@ -130,7 +131,7 @@ const Spotify = {
       }
 
       // Add tracks to playlist
-      await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+      await fetch(`${APIBaseURI}/playlists/${playlistId}/tracks`,
         {
           headers: headers,
           method: "POST",
