@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import AuthButton from '../AuthButton/AuthButton';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
@@ -7,10 +8,19 @@ import Spotify from '../../util/Spotify';
 
 function App() {
 
+  const [authenticated, setAuthenticated] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-
   const [playlistName, setPlaylistName] = useState("New Playlist");
   const [playlistTracks, setPlaylistTracks] = useState([]);
+
+  function authenticate() {
+    console.log("Checking authentication.");
+    if (Spotify.getAccessToken()) {
+      setAuthenticated(true);
+    } else {
+      setAuthenticated(false);
+    }
+  }
 
   async function search(query) {
     const results = await Spotify.search(query);
@@ -48,17 +58,23 @@ function App() {
   return (
     <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
-      <div className="App">
-        <SearchBar onSearch={search} />
-        <div className="App-playlist">
-          <SearchResults searchResults={searchResults} onAdd={addTrack} />
-          <Playlist playlistTracks={playlistTracks}
-                    onRemove={removeTrack}
-                    onNameChange={updatePlaylistName}
-                    onSave={savePlaylist}
-                    />
+      {authenticated ? (
+        <div className="App">
+          <SearchBar onSearch={search} />
+          <div className="App-playlist">
+            <SearchResults searchResults={searchResults} onAdd={addTrack} />
+            <Playlist playlistTracks={playlistTracks}
+                      onRemove={removeTrack}
+                      onNameChange={updatePlaylistName}
+                      onSave={savePlaylist}
+                      />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="App">
+          <AuthButton onClick={authenticate} />
+        </div>
+      )}
     </div>
   );
 }
