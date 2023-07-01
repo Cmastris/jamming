@@ -58,6 +58,11 @@ const Spotify = {
       return [];
     }
 
+    if (term.length < 1) {
+      console.log("Search term not provided; won't search.");
+      return [];
+    }
+
     console.log(`Authenticated; requesting search data for "${term}"...`);
     try {
       const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`,
