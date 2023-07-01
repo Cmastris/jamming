@@ -3,23 +3,23 @@ import cid from './secrets';
 const clientId = cid;
 const redirectURI = "http://localhost:3000/";
 const APIBaseURI = "https://api.spotify.com/v1";
-let token = null;
 
 const Spotify = {
 
+  _token: null,
+
   getAccessToken() {
-    if (token) {
+    if (this._token) {
       console.log('Token already set; returning token.');
-      return token;
+      return this._token;
     
     } else {
       // https://developer.spotify.com/documentation/web-api/tutorials/implicit-flow
       console.log('Token not set; attempting to retrieve token from URL.');
       this.getTokenFromURL();
-
-      if (token) {
+      if (this._token) {
         console.log('Token retrieved from URL.');
-        return token;
+        return this._token;
       } else {
         console.log('Token not found in URL; authorising user externally.');
         window.location = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
@@ -33,19 +33,19 @@ const Spotify = {
     let expiryMatch = url.match(/expires_in=([^&]*)/);
     if (tokenMatch && expiryMatch) {
       this.setAuthData(tokenMatch[1], expiryMatch[1]);
-      return token;
+      return this._token;
     }
     return false;
   },
 
   setAuthData(URLToken, URLExpiry) {
-    token = URLToken;
+    this._token = URLToken;
     window.setTimeout(this.clearAccessToken, Number(URLExpiry)*1000);
     window.history.pushState('Access Token', null, '/');  // Remove auth data from URL
   },
 
   clearAccessToken() {
-    token = null;
+    this._token = null;
     console.log('Token cleared.');
   },
 
@@ -53,8 +53,8 @@ const Spotify = {
     // https://developer.spotify.com/documentation/web-api/concepts/api-calls
     // https://developer.spotify.com/documentation/web-api/reference/search
     
-    let auth = this.getAccessToken();
-    if (!auth) {
+    let token = this.getAccessToken();
+    if (!token) {
       console.log("Not authenticated; won't search.");
       return [];
     }
@@ -94,8 +94,8 @@ const Spotify = {
       return;
     }
 
-    let auth = this.getAccessToken();
-    if (!auth) {
+    let token = this.getAccessToken();
+    if (!token) {
       console.log("Not authenticated; won't save playlist.");
       return;
     }
