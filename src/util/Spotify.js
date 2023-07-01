@@ -16,7 +16,7 @@ const Spotify = {
     } else {
       // https://developer.spotify.com/documentation/web-api/tutorials/implicit-flow
       console.log('Token not set; attempting to retrieve token from URL.');
-      this.getTokenFromURL();
+      this._getTokenFromURL();
       if (this._token) {
         console.log('Token retrieved from URL.');
         return this._token;
@@ -27,18 +27,18 @@ const Spotify = {
     }
   },
 
-  getTokenFromURL() {
+  _getTokenFromURL() {
     const url = window.location.href;
     let tokenMatch = url.match(/access_token=([^&]*)/);
     let expiryMatch = url.match(/expires_in=([^&]*)/);
     if (tokenMatch && expiryMatch) {
-      this.setAuthData(tokenMatch[1], expiryMatch[1]);
+      this._setAuthData(tokenMatch[1], expiryMatch[1]);
       return this._token;
     }
     return false;
   },
 
-  setAuthData(URLToken, URLExpiry) {
+  _setAuthData(URLToken, URLExpiry) {
     this._token = URLToken;
     window.setTimeout(this.clearAccessToken, Number(URLExpiry)*1000);
     window.history.pushState('Access Token', null, '/');  // Remove auth data from URL
